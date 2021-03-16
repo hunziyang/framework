@@ -2,11 +2,11 @@ package com.wdy.framework.controller;
 
 import com.wdy.framework.entity.Student;
 import com.wdy.framework.service.StudentService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import com.wdy.framework.util.result.Result;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * (Student)表控制层
@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  * @since 2020-11-01 09:49:07
  */
 @RestController
-@RequestMapping("student")
+@RequestMapping("/student")
 public class StudentController {
     /**
      * 服务对象
@@ -27,5 +27,16 @@ public class StudentController {
     public Student druid(){
         return  studentService.druid();
     }
+    @DeleteMapping("/getByid")
+    public void getByid(@RequestParam(value = "id",required = false) Integer id){
+        Student byid = studentService.getByid((long)id);
+        System.out.println(byid);
+    }
+    @GetMapping("/getStu")
+    public Result getStu(){
+        List<Student> stu = studentService.getStu();
+        return Result.success(stu);
+    }
+
 
 }
