@@ -23,20 +23,4 @@ public class StudentController {
     @Resource
     private StudentService studentService;
 
-    @GetMapping("/druid")
-    public Student druid(){
-        return  studentService.druid();
-    }
-    @DeleteMapping("/getByid")
-    public void getByid(@RequestParam(value = "id",required = false) Integer id){
-        Student byid = studentService.getByid((long)id);
-        System.out.println(byid);
-    }
-    @GetMapping("/getStu")
-    public Result getStu(){
-        List<Student> stu = studentService.getStu();
-        return Result.success(stu);
-    }
-
-
 }
