@@ -1,6 +1,7 @@
 package com.wdy.framework.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
@@ -16,19 +17,23 @@ import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import javax.sql.DataSource;
 
 @Configuration
-@MapperScan(basePackages = "com.wdy.framework.dao", sqlSessionTemplateRef  = "masterSqlSessionTemplate")
+@MapperScan(basePackages = "com.wdy.framework.dao", sqlSessionTemplateRef = "masterSqlSessionTemplate")
 public class MasterDataSourcesConfig {
 
     @Bean(name = "masterDataSource")
     @Primary   //配置默认数据源
     @ConfigurationProperties(prefix = "spring.datasource.druid.master")
     public DataSource dataSource() {
-        return  new DruidDataSource();
+        return new DruidDataSource();
     }
 
     @Bean(name = "masterSqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory(@Qualifier("masterDataSource") DataSource dataSource) throws Exception {
         MybatisSqlSessionFactoryBean bean = new MybatisSqlSessionFactoryBean();
+        // 不配置Mybatis-plus的自动注入不生效
+        GlobalConfig globalConfig = new GlobalConfig();
+        globalConfig.setMetaObjectHandler(new MyMetaObjectHandler());
+        bean.setGlobalConfig(globalConfig);
         bean.setDataSource(dataSource);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
         return bean.getObject();
@@ -44,7 +49,6 @@ public class MasterDataSourcesConfig {
             throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
-
 
 
 }

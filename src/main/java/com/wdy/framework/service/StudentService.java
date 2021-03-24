@@ -12,6 +12,10 @@ import java.util.List;
  */
 public interface StudentService {
 
-    Student druid();
+    // 新增
+    public void insertStudent();
+
+    // 修改
+    public void updateStudent();
 
 }
