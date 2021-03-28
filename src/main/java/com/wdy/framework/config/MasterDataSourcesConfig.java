@@ -1,8 +1,10 @@
 package com.wdy.framework.config;
 
 import com.alibaba.druid.pool.DruidDataSource;
+import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
+import org.apache.ibatis.logging.stdout.StdOutImpl;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.annotation.MapperScan;
@@ -34,6 +36,11 @@ public class MasterDataSourcesConfig {
         GlobalConfig globalConfig = new GlobalConfig();
         globalConfig.setMetaObjectHandler(new MyMetaObjectHandler());
         bean.setGlobalConfig(globalConfig);
+        // mybatis-plus配置类
+        MybatisConfiguration configuration = new MybatisConfiguration();
+        // 控制台展示sql
+        configuration.setLogImpl(StdOutImpl.class);
+        bean.setConfiguration(configuration);
         bean.setDataSource(dataSource);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
         return bean.getObject();
