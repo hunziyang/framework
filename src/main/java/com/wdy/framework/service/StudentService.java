@@ -1,8 +1,7 @@
 package com.wdy.framework.service;
 
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.wdy.framework.entity.Student;
-
-import java.util.List;
 
 /**
  * (Student)表服务接口
@@ -10,12 +9,12 @@ import java.util.List;
  * @author makejava
  * @since 2020-11-01 09:49:06
  */
-public interface StudentService {
+public interface StudentService extends IService<Student> {
 
     // 新增
-    public void insertStudent();
+    void insertStudent();
 
     // 修改
-    public void updateStudent();
+    void updateStudent();
 
 }

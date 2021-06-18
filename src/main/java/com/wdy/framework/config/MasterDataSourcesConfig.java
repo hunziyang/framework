@@ -3,6 +3,8 @@ package com.wdy.framework.config;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.baomidou.mybatisplus.core.MybatisConfiguration;
 import com.baomidou.mybatisplus.core.config.GlobalConfig;
+import com.baomidou.mybatisplus.extension.plugins.MybatisPlusInterceptor;
+import com.baomidou.mybatisplus.extension.plugins.inner.OptimisticLockerInnerInterceptor;
 import com.baomidou.mybatisplus.extension.spring.MybatisSqlSessionFactoryBean;
 import org.apache.ibatis.logging.stdout.StdOutImpl;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -40,6 +42,10 @@ public class MasterDataSourcesConfig {
         MybatisConfiguration configuration = new MybatisConfiguration();
         // 控制台展示sql
         configuration.setLogImpl(StdOutImpl.class);
+        //开启Mybatis-plus插件
+        MybatisPlusInterceptor interceptor = new MybatisPlusInterceptor();
+        interceptor.addInnerInterceptor(new OptimisticLockerInnerInterceptor());
+        bean.setPlugins(interceptor);
         bean.setConfiguration(configuration);
         bean.setDataSource(dataSource);
         bean.setMapperLocations(new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*.xml"));
@@ -56,6 +62,5 @@ public class MasterDataSourcesConfig {
             throws Exception {
         return new SqlSessionTemplate(sqlSessionFactory);
     }
-
 
 }

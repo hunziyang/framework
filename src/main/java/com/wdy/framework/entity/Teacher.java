@@ -28,6 +28,7 @@ public class Teacher{
     /**
      * 乐观锁
      */
+    @Version
     private Integer revision;
     /**
      * 创建人

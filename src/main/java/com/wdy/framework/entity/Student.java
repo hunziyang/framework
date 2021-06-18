@@ -7,7 +7,7 @@ import java.util.Date;
 
 @Data
 @TableName("student")
-public class Student {
+public class Student{
     /**
      * ID
      */
@@ -28,6 +28,7 @@ public class Student {
     /**
      * 乐观锁
      */
+    @Version
     private Integer revision;
     /**
      * 创建人

@@ -16,10 +16,10 @@ public class RedisController {
 
     @GetMapping("/test")
     public Result test(){
-        Student student = new Student();
-        student.setName("wang");
-        redisTemplate.opsForValue().set("yang",student);
-        Student s =(Student) redisTemplate.opsForValue().get("yang");
-        return Result.success(s);
+        redisTemplate.opsForValue().set("yang","yang");
+        Student stu = new Student();
+        stu.setName("wdy");
+        redisTemplate.convertAndSend("student",stu);
+        return Result.success(redisTemplate.opsForValue().get("yang"));
     }
 }

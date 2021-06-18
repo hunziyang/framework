@@ -1,5 +1,6 @@
 package com.wdy.framework.service.impl;
 
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wdy.framework.dao.StudentDao;
 import com.wdy.framework.entity.Student;
 import com.wdy.framework.service.StudentService;
@@ -15,8 +16,8 @@ import java.util.List;
  * @author makejava
  * @since 2020-11-01 09:49:06
  */
-@Service("studentService")
-public class StudentServiceImpl implements StudentService {
+@Service
+public class StudentServiceImpl extends ServiceImpl<StudentDao,Student> implements StudentService {
     @Autowired
     private StudentDao studentDao;
 
@@ -30,9 +31,8 @@ public class StudentServiceImpl implements StudentService {
 
     @Override
     public void updateStudent() {
-        Student student =new Student();
-        student.setId(22L);
-        student.setName("w");
-        studentDao.updateById(student);
+        Student s1 = studentDao.selectById(45);
+        s1.setName("11111111");
+        studentDao.updateById(s1);
     }
 }
