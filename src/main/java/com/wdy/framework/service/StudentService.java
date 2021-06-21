@@ -17,4 +17,6 @@ public interface StudentService extends IService<Student> {
     // 修改
     void updateStudent();
 
+    void selectByQuery();
+
 }

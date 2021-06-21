@@ -1,5 +1,7 @@
 package com.wdy.framework.service.impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wdy.framework.dao.StudentDao;
 import com.wdy.framework.entity.Student;
@@ -34,5 +36,12 @@ public class StudentServiceImpl extends ServiceImpl<StudentDao,Student> implemen
         Student s1 = studentDao.selectById(45);
         s1.setName("11111111");
         studentDao.updateById(s1);
+    }
+
+    @Override
+    public void selectByQuery() {
+        LambdaQueryWrapper<Student> wrapper = new LambdaQueryWrapper();
+        wrapper.eq(Student::getName,"yang");
+
     }
 }
